@@ -1,0 +1,84 @@
+/*
+ * Copyright 2016 Andres Almiray
+ *
+ * This file is part of Griffon Examples
+ *
+ * Griffon Examples is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Griffon Examples is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Griffon Examples. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+apply plugin: 'jdepend'
+apply plugin: 'checkstyle'
+apply plugin: 'com.github.hierynomus.license'
+
+def configDir = new File(buildscript.sourceFile.parentFile.parentFile, 'config')
+ext.checkstyleConfigDir = "$configDir/checkstyle"
+
+checkstyle {
+    toolVersion = '6.0'
+    configFile = new File(checkstyleConfigDir, 'checkstyle.xml')
+    configProperties.checkstyleConfigDir = checkstyleConfigDir
+}
+
+if (project.hasProperty('findBugsEnabled') && project.findBugsEnabled.toBoolean()) {
+    apply plugin: 'findbugs'
+    findbugs {
+        toolVersion = '3.0.0'
+        sourceSets = [sourceSets.main]
+        ignoreFailures = true
+        reportsDir = file("$project.buildDir/reports/findbugs")
+        effort = 'max'
+        reportLevel = 'high'
+    }
+
+    findbugsMain {
+        reports {
+            xml.enabled = false
+            html.enabled = true
+        }
+    }
+
+    findbugsTest {
+        reports {
+            xml.enabled = false
+            html.enabled = true
+        }
+    }
+}
+
+jdepend {
+    toolVersion = '2.9.1'
+    sourceSets = [sourceSets.main]
+    ignoreFailures = true
+    reportsDir = file("$project.buildDir/reports/jdepend")
+}
+
+license {
+    header = rootProject.file('config/HEADER')
+    strictCheck = true
+    ignoreFailures = true
+    mapping {
+        java   = 'SLASHSTAR_STYLE'
+        groovy = 'SLASHSTAR_STYLE'
+        fxml   = 'XML_STYLE'
+
+    }
+    ext.year    = '2016'
+    ext.author  = 'Andres Almiray'
+    ext.project = 'Griffon Examples'
+    exclude '**/*.png'
+}
+
+licenseTest {
+    source -= sourceSets.test.resources
+}
