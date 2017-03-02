@@ -1,0 +1,46 @@
+/*
+ * Copyright 2016-2017-2017 Andres Almiray
+ *
+ * This file is part of Griffon Examples
+ *
+ * Griffon Examples is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Griffon Examples is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Griffon Examples. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+apply plugin: 'jacoco'
+
+jacoco {
+    toolVersion = jacocoVersion
+}
+
+jacocoTestReport {
+    group = 'Reporting'
+    description = 'Generate Jacoco coverage reports after running tests.'
+
+    Set _sourceDirectories = [project.files(sourceSets.main.allSource.srcDirs)] as Set
+    List _classDirectories = [project.sourceSets.main.output.classesDir.path]
+
+    _sourceDirectories << project(':addressbook-common').sourceSets.main.allSource.srcDirs
+    _classDirectories << project(':addressbook-common').sourceSets.main.output.classesDir.path
+
+    additionalSourceDirs = project.files(_sourceDirectories)
+    sourceDirectories = project.files(_sourceDirectories)
+    classDirectories = project.files(_classDirectories)
+    reports {
+        xml.enabled = true
+        csv.enabled = false
+        html.enabled = true
+    }
+}
+
+projectsWithCoverage << project
