@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Andres Almiray
+ * Copyright 2016-2017 Andres Almiray
  *
  * This file is part of Griffon Examples
  *
@@ -20,7 +20,7 @@
 apply plugin: 'jacoco'
 
 jacoco {
-    toolVersion = '0.7.7.201606060606'
+    toolVersion = '0.7.7.2016-201706060606'
 }
 
 jacocoTestReport {
