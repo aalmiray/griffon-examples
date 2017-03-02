@@ -1,0 +1,58 @@
+= Addressbook
+
+A small addressbook application implemented with multiple persistence options.
+
+Check out these tutorials if you're new to Griffon
+
+ * link:http://griffon-framework.org/tutorials/1_getting_started.html[Getting Started]
+ * link:http://griffon-framework.org/tutorials/5_mvc_patterns.html[MVC Patterns]
+
+== Running
+
+Run the application by invoking the `run` Gradle target on a particular subproject, such as
+
+    $ ./gradlew :addressbook-jpa:run
+
+Do not invoke the target in the following subprojects
+
+ * addressbook-common
+ * addressbook-datasource
+ * addressbook-test
+
+== IDE Configuration
+
+Make sure to have annotation processing enabled on your IDE.
+
+[horizontal]
+NetBeans:: This setting is enabled by default. JARs with annotation processors
+will be automatically found in the classpath.
+IntelliJ:: You must enable "Annotation Processing" in the project preferences.
+JARs with annotation processors will be found in the classpath.
+Eclipse:: You must enable "Annotation Processing" in the project preferences.
+You also need to manually specify which JARs contain annotation processors,
+this would be the Lombok dependency. Alternatively there's an UI based installer
+for Lombok that solves this problem.
+
+== License
+
+All code found in this repository is licensed under GPL v3
+
+[source]
+----
+Copyright 2016-2017 Andres Almiray
+
+This file is part of Griffon Examples
+
+Griffon Examples is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Griffon Examples is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Griffon Examples. If not, see <http://www.gnu.org/licenses/>.
+----
