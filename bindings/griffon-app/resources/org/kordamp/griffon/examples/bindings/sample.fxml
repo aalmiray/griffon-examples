@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import eu.hansolo.medusa.Gauge?>
+<?import griffon.javafx.scene.layout.MigLayoutPane?>
+<?import griffon.javafx.support.JavaFXUtils?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TabPane?>
+<MigLayoutPane prefHeight="600.0" prefWidth="600.0"
+               xmlns:fx="http://javafx.com/fxml"
+               layout="fill, insets 10, wrap 3"
+               cols="[33%, center][33%, center][33%, center]"
+               fx:controller="org.kordamp.griffon.examples.bindings.SampleView">
+    <Label JavaFXUtils.i18nKey="org.kordamp.griffon.examples.bindings.SampleView.label.minimum"/>
+    <Label JavaFXUtils.i18nKey="org.kordamp.griffon.examples.bindings.SampleView.label.average"/>
+    <Label JavaFXUtils.i18nKey="org.kordamp.griffon.examples.bindings.SampleView.label.maximum"/>
+
+    <Gauge fx:id="minAmountGauge"
+           skinType="DASHBOARD"
+           animated="true"
+           barColor="blue"/>
+    <Gauge fx:id="avgAmountGauge"
+           skinType="DASHBOARD"
+           animated="true"
+           barColor="green"/>
+    <Gauge fx:id="maxAmountGauge"
+           skinType="DASHBOARD"
+           animated="true"
+           barColor="red"/>
+
+    <Label fx:id="minNameLabel"/>
+    <Label/>
+    <Label fx:id="maxNameLabel"/>
+
+    <Label fx:id="minTimestampLabel"/>
+    <Label/>
+    <Label fx:id="maxTimestampLabel"/>
+
+    <Button MigLayoutPane.cc="grow" styleClass="btn, btn-primary" JavaFXUtils.griffonActionId="add"/>
+    <Label fx:id="totalLabel"/>
+    <Button MigLayoutPane.cc="grow" styleClass="btn, btn-danger" JavaFXUtils.griffonActionId="clear"/>
+
+    <TabPane side="BOTTOM" MigLayoutPane.cc="grow, span 3">
+        <Tab closable="false" JavaFXUtils.i18nKey="org.kordamp.griffon.examples.bindings.SampleView.tab.table">
+            <TableView fx:id="measurementsTableView"/>
+        </Tab>
+        <Tab closable="false" JavaFXUtils.i18nKey="org.kordamp.griffon.examples.bindings.SampleView.tab.chart">
+            <LineChart fx:id="measurementsChart" legendVisible="false" animated="false">
+                <xAxis>
+                    <CategoryAxis tickLabelRotation="90"
+                                  JavaFXUtils.i18nKey="org.kordamp.griffon.examples.bindings.SampleView.chart.xaxis.label"/>
+                </xAxis>
+                <yAxis>
+                    <NumberAxis
+                        JavaFXUtils.i18nKey="org.kordamp.griffon.examples.bindings.SampleView.chart.yaxis.label"/>
+                </yAxis>
+            </LineChart>
+        </Tab>
+    </TabPane>
+
+    <ChoiceBox fx:id="languageChoiceBox" MigLayoutPane.cc="right, span 3"/>
+</MigLayoutPane>

@@ -24,6 +24,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.StringProperty;
+import javafx.beans.value.ObservableValue;
 import org.fxmisc.easybind.EasyBind;
 import org.fxmisc.easybind.monadic.MonadicBinding;
 
@@ -32,7 +33,7 @@ import javax.annotation.Nonnull;
 import static griffon.util.GriffonNameUtils.isBlank;
 import static java.util.Objects.requireNonNull;
 
-public class ObservableContact implements ElementObservableList.PropertyContainer {
+public class ObservableContact implements ElementObservableList.ObservableValueContainer {
     private final ResetableStringProperty name = new ResetableStringProperty(this, "name");
     private final ResetableStringProperty lastname = new ResetableStringProperty(this, "lastname");
     private final ResetableStringProperty address = new ResetableStringProperty(this, "address");
@@ -183,7 +184,7 @@ public class ObservableContact implements ElementObservableList.PropertyContaine
 
     @Nonnull
     @Override
-    public Property<?>[] properties() {
+    public ObservableValue<?>[] observableValues() {
         return new Property<?>[]{
             nameProperty(),
             lastnameProperty(),

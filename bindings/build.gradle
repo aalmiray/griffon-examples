@@ -1,0 +1,128 @@
+import java.text.SimpleDateFormat
+
+buildscript {
+    repositories {
+        jcenter()
+        maven { url 'https://plugins.gradle.org/m2/' }
+        mavenLocal()
+    }
+
+    dependencies {
+        classpath "org.codehaus.griffon:gradle-griffon-plugin:$griffonVersion"
+        classpath 'nl.javadude.gradle.plugins:license-gradle-plugin:0.11.0'
+        classpath 'org.kordamp.gradle:stats-gradle-plugin:0.2.0'
+        classpath 'com.github.ben-manes:gradle-versions-plugin:0.15.0'
+        classpath 'net.nemerosa:versioning:2.6.0'
+        classpath 'net.ltgt.gradle:gradle-apt-plugin:0.10'
+    }
+}
+
+apply plugin: 'groovy'
+apply plugin: 'org.codehaus.griffon.griffon'
+apply plugin: 'net.nemerosa.versioning'
+apply plugin: 'net.ltgt.apt'
+
+Date buildTimeAndDate = new Date()
+ext {
+    buildDate = new SimpleDateFormat('yyyy-MM-dd').format(buildTimeAndDate)
+    buildTime = new SimpleDateFormat('HH:mm:ss.SSSZ').format(buildTimeAndDate)
+    macosx = System.getProperty('os.name').contains('Mac OS')
+}
+
+griffon {
+    disableDependencyResolution = false
+    includeGroovyDependencies = false
+    version = griffonVersion
+    toolkit = 'javafx'
+    applicationProperties = [
+        'build.date'    : buildDate,
+        'build.time'    : buildTime,
+        'build.revision': versioning.info.commit
+    ]
+}
+
+mainClassName = 'org.kordamp.griffon.examples.bindings.Launcher'
+
+apply from: 'gradle/publishing.gradle'
+apply from: 'gradle/code-coverage.gradle'
+apply from: 'gradle/code-quality.gradle'
+apply from: 'gradle/javafx-plugin.gradle'
+apply from: 'gradle/integration-test.gradle'
+apply from: 'gradle/functional-test.gradle'
+apply from: 'gradle/docs.gradle'
+apply plugin: 'org.kordamp.gradle.stats'
+apply plugin: 'com.github.ben-manes.versions'
+
+javafx {
+    mainClass = mainClassName
+}
+
+dependencies {
+    griffon "org.codehaus.griffon.plugins:griffon-miglayout-plugin:$miglayoutPluginVersion"
+
+    compile "org.kordamp.ikonli:ikonli-javafx:$ikonliVersion"
+    compile "org.kordamp.ikonli:ikonli-fontawesome-pack:$ikonliVersion"
+    compile "org.kordamp.bootstrapfx:bootstrapfx-core:$bootstrapfxVersion"
+    compile "org.codehaus.griffon:griffon-guice:${griffon.version}"
+    compile "eu.hansolo:Medusa:$medusaVersion"
+
+    runtime "org.slf4j:slf4j-simple:$slf4jVersion"
+
+    testCompile "org.codehaus.griffon:griffon-javafx-test:${griffon.version}"
+    testCompile "org.codehaus.groovy:groovy-all:${groovyVersion}"
+    testCompile "org.spockframework:spock-core:${spockVersion}"
+
+    functionalTestCompile "org.codehaus.griffon:griffon-javafx-test:${griffon.version}"
+}
+
+task sourceJar(type: Jar) {
+    group 'Build'
+    description 'An archive of the source code'
+    classifier 'sources'
+    from sourceSets.main.allSource
+}
+
+compileGroovy.enabled = false
+
+tasks.withType(JavaCompile) {
+    sourceCompatibility = project.sourceCompatibility
+    targetCompatibility = project.targetCompatibility
+}
+
+tasks.withType(GroovyCompile) {
+    sourceCompatibility = project.sourceCompatibility
+    targetCompatibility = project.targetCompatibility
+}
+
+startScripts {
+    doLast {
+        if (!macosx) unixScript.text = unixScript.text.replaceAll('"(-Xdock:(name|icon)=)([^"]*?)(")', ' ')
+        windowsScript.text = windowsScript.text.replaceAll('"(-Xdock:(name|icon)=)([^"]*?)(")', ' ')
+    }
+}
+
+if (hasProperty('debugRun') && ((project.debugRun as boolean))) {
+    run {
+        jvmArgs '-Xdebug', '-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005'
+    }
+}
+
+task jacocoRootMerge(type: org.gradle.testing.jacoco.tasks.JacocoMerge, dependsOn: [test, jacocoTestReport, jacocoIntegrationTestReport, jacocoFunctionalTestReport]) {
+    executionData = files(jacocoTestReport.executionData, jacocoIntegrationTestReport.executionData, jacocoFunctionalTestReport.executionData)
+    destinationFile = file("${buildDir}/jacoco/root.exec")
+}
+
+task jacocoRootReport(dependsOn: jacocoRootMerge, type: JacocoReport) {
+    group = 'Reporting'
+    description = 'Generate Jacoco coverage reports after running all tests.'
+    executionData file("${buildDir}/jacoco/root.exec")
+    sourceDirectories = files(sourceSets.main.allSource.srcDirs)
+    classDirectories = files(sourceSets.main.output)
+    reports {
+        csv.enabled = false
+        xml.enabled = true
+        html.enabled = true
+        html.destination = "${buildDir}/reports/jacoco/root/html"
+        xml.destination = "${buildDir}/reports/jacoco/root/root.xml"
+    }
+}
