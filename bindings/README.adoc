@@ -1,0 +1,18 @@
+= Bindings Example
+
+Demonstrates the following features provided by link:http://griffon-framework.org/[Griffon]:
+
+ * Calculate min/max aggregate values on a collection using `ReducingBindings`.
+ * Calculate an average on a collection using `CollectionBindings`.
+ * Transform an ObservableList into another using `MappingObservableList`.
+ * Create UI thread safe bindings with `UIThreadAwareBindings`.
+ * Easily define table columns for a `TableView` using `TableViewFormat` and `TableViewModel`.
+ * Apply dynamic I18N to all labels, including table column headers.
+
+Additional libraries used in this project:
+
+ * link:https://github.com/aalmiray/bootstrapfx/[BootstrapFX].
+ * link:https://github.com/aalmiray/ikonli/[Ikonli].
+ * link:https://github.com/HanSolo/Medusa[Medusa].
+
+link:https://www.youtube.com/watch?v=Ylj5t1i9thk[video].
