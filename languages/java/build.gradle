@@ -1,0 +1,138 @@
+/*
+ * Copyright 2016-2017 Andres Almiray
+ *
+ * This file is part of Griffon Examples
+ *
+ * Griffon Examples is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Griffon Examples is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Griffon Examples. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+buildscript {
+    repositories {
+        jcenter()
+        maven { url 'https://plugins.gradle.org/m2/' }
+    }
+
+    dependencies {
+        classpath 'nl.javadude.gradle.plugins:license-gradle-plugin:0.11.0'
+        classpath 'net.ltgt.gradle:gradle-apt-plugin:0.10'
+    }
+}
+
+apply plugin: 'idea'
+apply plugin: 'application'
+apply plugin: 'net.ltgt.apt'
+apply from: 'gradle/code-quality.gradle'
+
+mainClassName = 'sample.javafx.java.Launcher'
+
+repositories {
+    jcenter()
+}
+
+configurations {
+    integrationTestCompile {
+        extendsFrom testCompile
+    }
+    integrationTestRuntime {
+        extendsFrom integrationTestCompile, testRuntime
+    }
+    functionalTestCompile {
+        extendsFrom compile
+    }
+    functionalTestRuntime {
+        extendsFrom runtime
+    }
+}
+
+dependencies {
+    apt         "org.codehaus.griffon:griffon-core-compile:$griffonVersion"
+    compileOnly "org.codehaus.griffon:griffon-core-compile:$griffonVersion"
+
+    compile "org.codehaus.griffon:griffon-javafx:$griffonVersion"
+    compile "org.codehaus.griffon:griffon-guice:$griffonVersion"
+
+    runtime "org.slf4j:slf4j-simple:$slf4jVersion"
+
+    testCompile "org.codehaus.griffon:griffon-core-test:$griffonVersion"
+    testCompile "org.codehaus.griffon:griffon-javafx-test:$griffonVersion"
+
+    functionalTestCompile "org.codehaus.griffon:griffon-core-test:$griffonVersion"
+    functionalTestCompile "org.codehaus.griffon:griffon-javafx-test:$griffonVersion"
+}
+
+processResources {
+    filesMatching('**/*.properties') {
+        expand(
+            'application_name'   : project.name,
+            'application_version': project.version,
+            'griffon_version'    : griffonVersion
+        )
+    }
+}
+sourceSets {
+    integrationTest {
+        java.srcDirs file('src/integration-test/java')
+        compileClasspath += sourceSets.main.output
+        runtimeClasspath += compileClasspath
+    }
+
+    functionalTest {
+        java.srcDirs file('src/functional-test/java')
+        compileClasspath += sourceSets.main.output
+        runtimeClasspath += compileClasspath
+    }
+}
+
+idea {
+    module {
+        scopes.TEST.plus += [configurations.integrationTestCompile]
+        scopes.TEST.plus += [configurations.integrationTestRuntime]
+        testSourceDirs += sourceSets.integrationTest.allSource.srcDirs
+        scopes.TEST.plus += [configurations.functionalTestCompile]
+        scopes.TEST.plus += [configurations.functionalTestRuntime]
+        testSourceDirs += sourceSets.functionalTest.allSource.srcDirs
+    }
+}
+
+task integrationTest(type: Test, dependsOn: jar) {
+    testClassesDirs = sourceSets.integrationTest.output.classesDirs
+    classpath = sourceSets.integrationTest.runtimeClasspath
+    reports.html.enabled = false
+}
+
+task integrationTestReport(type: TestReport) {
+    destinationDir = file("${buildDir}/reports/integration-tests")
+    reportOn integrationTest.binResultsDir
+}
+
+integrationTest.mustRunAfter test
+integrationTest.finalizedBy integrationTestReport
+check.dependsOn integrationTestReport
+
+task functionalTest(type: Test, dependsOn: jar) {
+    testClassesDirs = sourceSets.functionalTest.output.classesDirs
+    classpath = sourceSets.functionalTest.runtimeClasspath
+    reports.html.enabled = false
+}
+
+task functionalTestReport(type: TestReport) {
+    destinationDir = file("${buildDir}/reports/functional-tests")
+    reportOn functionalTest.binResultsDir
+}
+
+functionalTest.mustRunAfter integrationTest
+functionalTest.finalizedBy functionalTestReport
+check.dependsOn functionalTestReport
+
+task allTests(dependsOn: [test, integrationTest, functionalTest]) {}
