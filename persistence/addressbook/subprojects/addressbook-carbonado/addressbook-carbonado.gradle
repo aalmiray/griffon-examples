@@ -19,7 +19,7 @@
 
 dependencies {
     compile project(':addressbook-datasource')
-    griffon "org.codehaus.griffon.plugins:griffon-carbonado-plugin:$carbondadoPluginVersion"
+    griffon "org.codehaus.griffon.plugins:griffon-carbonado-plugin:$carbonadoPluginVersion"
     testCompile project(':addressbook-test')
 }
 
