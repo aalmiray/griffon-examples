@@ -21,7 +21,9 @@ package sample.javafx.groovy
 import griffon.core.artifact.GriffonModel
 import griffon.metadata.ArtifactProviderFor
 import griffon.transform.FXObservable
+import groovy.transform.CompileStatic
 
+@CompileStatic
 @ArtifactProviderFor(GriffonModel)
 class SampleModel {
     @FXObservable String input

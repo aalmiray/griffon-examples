@@ -21,6 +21,7 @@ package sample.javafx.groovy
 import griffon.core.artifact.GriffonView
 import griffon.inject.MVCMember
 import griffon.metadata.ArtifactProviderFor
+import groovy.transform.TypeChecked
 import javafx.fxml.FXML
 import javafx.scene.Group
 import javafx.scene.Node
@@ -35,6 +36,7 @@ import javax.annotation.Nonnull
 
 import static griffon.javafx.beans.binding.UIThreadAwareBindings.uiThreadAwareStringProperty
 
+@TypeChecked
 @ArtifactProviderFor(GriffonView)
 class SampleView extends AbstractJavaFXGriffonView {
     @MVCMember @Nonnull
@@ -49,7 +51,7 @@ class SampleView extends AbstractJavaFXGriffonView {
 
     @Override
     void initUI() {
-        Stage stage = application.createApplicationContainer([:])
+        Stage stage = (Stage) application.createApplicationContainer([:])
         stage.title = application.configuration.getAsString('application.title')
         stage.width = 400
         stage.height = 120

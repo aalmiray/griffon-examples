@@ -19,7 +19,9 @@
 package sample.javafx.groovy
 
 import griffon.javafx.JavaFXGriffonApplication
+import groovy.transform.CompileStatic
 
+@CompileStatic
 class Launcher {
     static void main(String[] args) throws Exception {
         JavaFXGriffonApplication.run(JavaFXGriffonApplication, args)

@@ -21,6 +21,7 @@ package sample.javafx.groovy
 import griffon.core.artifact.ArtifactManager
 import griffon.core.test.GriffonUnitRule
 import griffon.core.test.TestFor
+import groovy.transform.CompileStatic
 import javafx.embed.swing.JFXPanel
 import org.junit.Rule
 import org.junit.Test
@@ -31,6 +32,7 @@ import static java.util.concurrent.TimeUnit.SECONDS
 import static org.awaitility.Awaitility.await
 import static org.hamcrest.Matchers.notNullValue
 
+@CompileStatic
 @TestFor(SampleController)
 class SampleControllerTest {
     static {

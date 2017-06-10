@@ -21,12 +21,15 @@ package sample.javafx.groovy
 import griffon.core.artifact.GriffonService
 import griffon.core.i18n.MessageSource
 import griffon.metadata.ArtifactProviderFor
+import groovy.transform.CompileStatic
+import org.codehaus.griffon.runtime.core.artifact.AbstractGriffonService
 
 import static griffon.util.GriffonNameUtils.isBlank
 
+@CompileStatic
 @javax.inject.Singleton
 @ArtifactProviderFor(GriffonService)
-class SampleService {
+class SampleService extends AbstractGriffonService {
     String sayHello(String input) {
         MessageSource ms = application.messageSource
         isBlank(input) ? ms.getMessage('greeting.default') : ms.getMessage('greeting.parameterized', [input])

@@ -22,12 +22,15 @@ import griffon.core.artifact.GriffonController
 import griffon.core.controller.ControllerAction
 import griffon.inject.MVCMember
 import griffon.metadata.ArtifactProviderFor
+import groovy.transform.CompileStatic
+import org.codehaus.griffon.runtime.core.artifact.AbstractGriffonController
 
 import javax.annotation.Nonnull
 import javax.inject.Inject
 
+@CompileStatic
 @ArtifactProviderFor(GriffonController)
-class SampleController {
+class SampleController extends AbstractGriffonController {
     @MVCMember @Nonnull
     SampleModel model
 

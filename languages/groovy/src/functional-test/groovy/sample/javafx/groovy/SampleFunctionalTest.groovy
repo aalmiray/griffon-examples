@@ -20,6 +20,7 @@ package sample.javafx.groovy
 
 import griffon.javafx.test.FunctionalJavaFXRunner
 import griffon.javafx.test.GriffonTestFXClassRule
+import groovy.transform.CompileStatic
 import org.junit.ClassRule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -27,6 +28,7 @@ import org.junit.runner.RunWith
 import static org.testfx.api.FxAssert.verifyThat
 import static org.testfx.matcher.control.LabeledMatchers.hasText
 
+@CompileStatic
 @RunWith(FunctionalJavaFXRunner)
 class SampleFunctionalTest {
     static {

@@ -19,12 +19,14 @@
 package sample.javafx.groovy
 
 import griffon.core.injection.Module
+import groovy.transform.CompileStatic
 import org.codehaus.griffon.runtime.core.injection.AbstractModule
 import org.codehaus.griffon.runtime.util.ResourceBundleProvider
 import org.kordamp.jipsy.ServiceProviderFor
 
 import static griffon.util.AnnotationUtils.named
 
+@CompileStatic
 @ServiceProviderFor(Module)
 class ApplicationModule extends AbstractModule {
     @Override
