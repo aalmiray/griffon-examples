@@ -21,17 +21,6 @@ val griffonVersion by project
 val kotlinVersion by project
 val slf4jVersion by project
 
-buildscript {
-    repositories {
-        gradleScriptKotlin()
-        maven { setUrl("https://plugins.gradle.org/m2/") }
-    }
-
-    dependencies {
-        classpath(kotlinModule("gradle-plugin"))
-    }
-}
-
 apply {
     plugin("kotlin")
 }
