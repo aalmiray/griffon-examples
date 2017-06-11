@@ -25,6 +25,7 @@ buildscript {
 
     dependencies {
         classpath 'nl.javadude.gradle.plugins:license-gradle-plugin:0.11.0'
+        classpath 'org.kordamp.gradle:stats-gradle-plugin:0.2.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
     }
 }
@@ -32,6 +33,7 @@ buildscript {
 apply plugin: 'idea'
 apply plugin: 'kotlin'
 apply plugin: 'org.jetbrains.kotlin.kapt'
+apply plugin: 'org.kordamp.gradle.stats'
 apply plugin: 'application'
 apply from: 'gradle/code-quality.gradle'
 

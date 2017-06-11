@@ -25,6 +25,7 @@ buildscript {
 
     dependencies {
         classpath 'nl.javadude.gradle.plugins:license-gradle-plugin:0.11.0'
+        classpath 'org.kordamp.gradle:stats-gradle-plugin:0.2.0'
         classpath 'net.ltgt.gradle:gradle-apt-plugin:0.10'
     }
 }
@@ -32,6 +33,7 @@ buildscript {
 apply plugin: 'idea'
 apply plugin: 'application'
 apply plugin: 'net.ltgt.apt'
+apply plugin: 'org.kordamp.gradle.stats'
 apply from: 'gradle/code-quality.gradle'
 
 mainClassName = 'sample.javafx.java.Launcher'
