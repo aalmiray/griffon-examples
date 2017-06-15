@@ -1,0 +1,54 @@
+/*
+ * Copyright 2016-2017 Andres Almiray
+ *
+ * This file is part of Griffon Examples
+ *
+ * Griffon Examples is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Griffon Examples is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Griffon Examples. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+plugins {
+    id 'application'
+    id 'com.github.hierynomus.license' version '0.11.0'
+}
+
+mainClassName = 'org.kordamp.griffon.examples.cardpane.Sample'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile "com.miglayout:miglayout-javafx:$miglayoutVersion"
+    compile "org.kordamp.ikonli:ikonli-javafx:$ikonliVersion"
+    compile "org.kordamp.ikonli:ikonli-fontawesome-pack:$ikonliVersion"
+    compile "org.kordamp.bootstrapfx:bootstrapfx-core:$bootstrapfxVersion"
+    compile "org.codehaus.griffon:griffon-javafx:$griffonVersion"
+
+    runtime "org.slf4j:slf4j-simple:$slf4jVersion"
+}
+
+license {
+    header = rootProject.file('gradle/HEADER')
+    strictCheck    = true
+    ignoreFailures = false
+    mapping {
+        java   = 'SLASHSTAR_STYLE'
+        fxml   = 'XML_STYLE'
+    }
+    ext.year    = '2016-2017'
+    ext.author  = 'Andres Almiray'
+    ext.project = 'Griffon Examples'
+    exclude '**/*.png'
+    exclude '**/*.gif'
+}
