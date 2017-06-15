@@ -5,6 +5,8 @@ A small JavaFX only application showcasing the usage of
  * link:http://griffon-framework.org/guide/2.11.0/api/griffon/javafx/scene/layout/IndexedCardPane.html[IndexedCardPane]
  * link:http://griffon-framework.org/guide/2.11.0/api/griffon/javafx/scene/layout/NamedCardPane.html[NamedCardPane]
 
+Each animation frame is displayed on a different card.
+
 == Running
 
 Run the application by invoking the `run` Gradle command
