@@ -34,12 +34,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.codehaus.griffon.runtime.javafx.artifact.AbstractJavaFXGriffonView;
-import org.fxmisc.easybind.EasyBind;
-import org.fxmisc.easybind.monadic.MonadicBinding;
 
 import javax.annotation.Nonnull;
 import java.util.Collections;
 
+import static griffon.javafx.beans.binding.MappingBindings.mapAsBoolean;
 import static griffon.javafx.beans.binding.UIThreadAwareBindings.uiThreadAwareIntegerProperty;
 import static griffon.javafx.beans.binding.UIThreadAwareBindings.uiThreadAwareStringProperty;
 import static griffon.javafx.collections.GriffonFXCollections.uiThreadAwareObservableList;
@@ -144,7 +143,7 @@ public class AddressbookView extends AbstractJavaFXGriffonView {
         connectActions(node, controller);
 
         toolkitActionFor(controller, "save").enabledProperty().bind(model.getObservableContact().readyProperty());
-        MonadicBinding<Boolean> hasSelection = EasyBind.map(contacts.getSelectionModel().selectedIndexProperty(), v -> v.intValue() != -1);
+        BooleanBinding hasSelection = mapAsBoolean(contacts.getSelectionModel().selectedIndexProperty(), v -> v.intValue() != -1);
         toolkitActionFor(controller, "delete").enabledProperty().bind(hasSelection);
         BooleanBinding hasItems = createBooleanBinding(() -> contacts.getItems().size() != 0, contacts.getItems());
         toolkitActionFor(controller, "print").enabledProperty().bind(hasItems);
