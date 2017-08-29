@@ -39,6 +39,34 @@ repositories {
     gradleScriptKotlin()
 }
 
+val sourceSets = java.sourceSets!!
+val SourceSet.kotlin: SourceDirectorySet
+    get() = (this as HasConvention).convention.getPlugin<KotlinSourceSet>().kotlin
+val SourceSetContainer.main: SourceSet get() = getByName("main")
+val SourceSetContainer.test: SourceSet get() = getByName("test")
+fun SourceDirectorySet.sourceDirs(srcDirs: () -> Iterable<File>) {
+    setSrcDirs(srcDirs())
+}
+
+// Warning:<i><b>root project 'sample-kotlin': Unable to resolve all content root directories</b>
+// Details: java.lang.NullPointerException: null</i>
+
+val integrationTest by sourceSets.creating {
+    java.sourceDirs { files("src/integration-test/java") }
+    kotlin.sourceDirs { files("src/integration-test/kotlin") }
+    resources.sourceDirs { files("src/integration-test/resources") }
+    compileClasspath += sourceSets.main.output
+    runtimeClasspath += compileClasspath
+}
+
+val functionalTest by sourceSets.creating {
+    java.sourceDirs { files("src/functional-test/java") }
+    kotlin.sourceDirs { files("src/functional-test/kotlin") }
+    resources.sourceDirs { files("src/functional-test/resources") }
+    compileClasspath += sourceSets.main.output
+    runtimeClasspath += compileClasspath
+}
+
 dependencies {
     kapt("org.codehaus.griffon:griffon-core-compile:$griffonVersion")
     compileOnly("org.codehaus.griffon:griffon-core-compile:$griffonVersion")
@@ -52,37 +80,23 @@ dependencies {
     testCompile("org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion")
     testCompile("org.codehaus.griffon:griffon-core-test:$griffonVersion")
     testCompile("org.codehaus.griffon:griffon-javafx-test:$griffonVersion")
+
+    add(integrationTest.compileConfigurationName, "org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion")
+    add(integrationTest.compileConfigurationName, "org.codehaus.griffon:griffon-core-test:$griffonVersion")
+    add(integrationTest.compileConfigurationName, "org.codehaus.griffon:griffon-javafx-test:$griffonVersion")
+
+    add(functionalTest.compileConfigurationName, "org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion")
+    add(functionalTest.compileConfigurationName, "org.codehaus.griffon:griffon-core-test:$griffonVersion")
+    add(functionalTest.compileConfigurationName, "org.codehaus.griffon:griffon-javafx-test:$griffonVersion")
 }
 
 tasks.withType<ProcessResources> {
     filesMatching("**/*.properties") {
-        expand(hashMapOf(
-                "application_name"    to project.name,
-                "application_version" to project.version,
-                "griffon_version"     to griffonVersion
+        expand(mapOf(
+            "application_name" to project.name,
+            "application_version" to project.version,
+            "griffon_version" to griffonVersion
         ))
     }
 }
 
-val sourceSets = java.sourceSets!!
-val SourceSet.kotlin: SourceDirectorySet
-    get() = (this as HasConvention).convention.getPlugin<KotlinSourceSet>().kotlin
-fun SourceDirectorySet.sourceDirs(srcDirs: () -> Iterable<File>) {
-    setSrcDirs(srcDirs())
-}
-
-// Warning:<i><b>root project 'sample-kotlin': Unable to resolve all content root directories</b>
-// Details: java.lang.NullPointerException: null</i>
-
-val integrationTest by sourceSets.creating {
-    java.sourceDirs { files("src/integration-test") }
-    kotlin.sourceDirs { files("src/integration-test") }
-    resources.sourceDirs { files("src/integration-test") }
-//    throw UnsupportedOperationException(this.toString())
-}
-
-val functionalTest by sourceSets.creating {
-    java.sourceDirs { files("src/functional-test") }
-    kotlin.sourceDirs { files("src/functional-test") }
-    resources.sourceDirs { files("src/functional-test") }
-}
