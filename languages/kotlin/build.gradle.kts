@@ -74,16 +74,15 @@ fun SourceDirectorySet.sourceDirs(srcDirs: () -> Iterable<File>) {
 // Warning:<i><b>root project 'sample-kotlin': Unable to resolve all content root directories</b>
 // Details: java.lang.NullPointerException: null</i>
 
-sourceSets.create("integrationTest") {
+val integrationTest by sourceSets.creating {
     java.sourceDirs { files("src/integration-test") }
     kotlin.sourceDirs { files("src/integration-test") }
     resources.sourceDirs { files("src/integration-test") }
 //    throw UnsupportedOperationException(this.toString())
 }
 
-sourceSets.create("functionalTest") {
+val functionalTest by sourceSets.creating {
     java.sourceDirs { files("src/functional-test") }
     kotlin.sourceDirs { files("src/functional-test") }
     resources.sourceDirs { files("src/functional-test") }
-//    throw UnsupportedOperationException(this.toString())
 }
