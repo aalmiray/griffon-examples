@@ -17,6 +17,9 @@
  * along with Griffon Examples. If not, see <http://www.gnu.org/licenses/>.
  */
 
+import org.gradle.api.internal.HasConvention
+import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
+
 val griffonVersion by project
 val kotlinVersion by project
 val slf4jVersion by project
@@ -59,4 +62,28 @@ tasks.withType<ProcessResources> {
                 "griffon_version"     to griffonVersion
         ))
     }
+}
+
+val sourceSets = java.sourceSets!!
+val SourceSet.kotlin: SourceDirectorySet
+    get() = (this as HasConvention).convention.getPlugin<KotlinSourceSet>().kotlin
+fun SourceDirectorySet.sourceDirs(srcDirs: () -> Iterable<File>) {
+    setSrcDirs(srcDirs())
+}
+
+// Warning:<i><b>root project 'sample-kotlin': Unable to resolve all content root directories</b>
+// Details: java.lang.NullPointerException: null</i>
+
+sourceSets.create("integrationTest") {
+    java.sourceDirs { files("src/integration-test") }
+    kotlin.sourceDirs { files("src/integration-test") }
+    resources.sourceDirs { files("src/integration-test") }
+//    throw UnsupportedOperationException(this.toString())
+}
+
+sourceSets.create("functionalTest") {
+    java.sourceDirs { files("src/functional-test") }
+    kotlin.sourceDirs { files("src/functional-test") }
+    resources.sourceDirs { files("src/functional-test") }
+//    throw UnsupportedOperationException(this.toString())
 }
