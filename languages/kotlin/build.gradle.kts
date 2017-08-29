@@ -21,13 +21,10 @@ val griffonVersion by project
 val kotlinVersion by project
 val slf4jVersion by project
 
-apply {
-    plugin("kotlin")
-}
-
 plugins {
-    id("org.jetbrains.kotlin.kapt") version "1.1.2-2"
     application
+    kotlin("jvm", "1.1.4-2")
+    id("org.jetbrains.kotlin.kapt") version "1.1.4-2"
 }
 
 application {
@@ -45,7 +42,7 @@ dependencies {
 
     compile("org.codehaus.griffon:griffon-javafx:$griffonVersion")
     compile("org.codehaus.griffon:griffon-guice:$griffonVersion")
-    compile(kotlinModule("stdlib"))
+    compile(kotlin("stdlib", "$kotlinVersion"))
 
     runtime("org.slf4j:slf4j-simple:$slf4jVersion")
 
