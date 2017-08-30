@@ -66,8 +66,6 @@ apply from: 'gradle/publishing.gradle'
 apply from: 'gradle/code-coverage.gradle'
 apply from: 'gradle/code-quality.gradle'
 apply from: 'gradle/javafx-plugin.gradle'
-apply from: 'gradle/integration-test.gradle'
-apply from: 'gradle/functional-test.gradle'
 apply from: 'gradle/docs.gradle'
 apply plugin: 'org.kordamp.gradle.stats'
 apply plugin: 'com.github.ben-manes.versions'
@@ -90,8 +88,6 @@ dependencies {
     testCompile "org.codehaus.griffon:griffon-javafx-test:${griffon.version}"
     testCompile "org.codehaus.groovy:groovy-all:${groovyVersion}"
     testCompile "org.spockframework:spock-core:${spockVersion}"
-
-    functionalTestCompile "org.codehaus.griffon:griffon-javafx-test:${griffon.version}"
 }
 
 task sourceJar(type: Jar) {
@@ -123,25 +119,5 @@ startScripts {
 if (hasProperty('debugRun') && ((project.debugRun as boolean))) {
     run {
         jvmArgs '-Xdebug', '-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005'
-    }
-}
-
-task jacocoRootMerge(type: org.gradle.testing.jacoco.tasks.JacocoMerge, dependsOn: [test, jacocoTestReport, jacocoIntegrationTestReport, jacocoFunctionalTestReport]) {
-    executionData = files(jacocoTestReport.executionData, jacocoIntegrationTestReport.executionData, jacocoFunctionalTestReport.executionData)
-    destinationFile = file("${buildDir}/jacoco/root.exec")
-}
-
-task jacocoRootReport(dependsOn: jacocoRootMerge, type: JacocoReport) {
-    group = 'Reporting'
-    description = 'Generate Jacoco coverage reports after running all tests.'
-    executionData file("${buildDir}/jacoco/root.exec")
-    sourceDirectories = files(sourceSets.main.allSource.srcDirs)
-    classDirectories = files(sourceSets.main.output)
-    reports {
-        csv.enabled = false
-        xml.enabled = true
-        html.enabled = true
-        html.destination = "${buildDir}/reports/jacoco/root/html"
-        xml.destination = "${buildDir}/reports/jacoco/root/root.xml"
     }
 }

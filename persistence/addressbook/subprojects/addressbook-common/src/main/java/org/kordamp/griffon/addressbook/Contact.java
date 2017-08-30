@@ -22,9 +22,12 @@ import lombok.Builder;
 import lombok.Data;
 
 import javax.annotation.Nonnull;
+import java.io.Serializable;
 
 @Data
-public class Contact {
+public class Contact implements Serializable {
+    private static final long serialVersionUID = 5068269804165649560L;
+
     private Long id;
     private String name;
     private String lastname;
