@@ -21,7 +21,8 @@ dependencies {
     compileOnly "org.projectlombok:lombok:$lombokVersion"
     compileOnly "org.codehaus.griffon:griffon-core-compile:${griffon.version}"
     compile project(':addressbook-datasource')
-    griffon "org.codehaus.griffon.plugins:griffon-hibernate5-plugin:$hibernate5PluginVersion"
+    // griffon "org.codehaus.griffon.plugins:griffon-hibernate5-plugin:$hibernate5PluginVersion"
+    compile "org.codehaus.griffon.plugins:griffon-hibernate5-core:$hibernate5PluginVersion"
     compile "org.hibernate:hibernate-core:$hibernate5Version"
     compile "org.hibernate:hibernate-entitymanager:$hibernate5Version"
     testCompile project(':addressbook-test')

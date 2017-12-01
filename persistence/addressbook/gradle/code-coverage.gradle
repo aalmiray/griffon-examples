@@ -28,10 +28,10 @@ jacocoTestReport {
     description = 'Generate Jacoco coverage reports after running tests.'
 
     Set _sourceDirectories = [project.files(sourceSets.main.allSource.srcDirs)] as Set
-    List _classDirectories = [project.sourceSets.main.output.classesDir.path]
+    List _classDirectories = [project.sourceSets.main.output.classesDirs*.path]
 
     _sourceDirectories << project(':addressbook-common').sourceSets.main.allSource.srcDirs
-    _classDirectories << project(':addressbook-common').sourceSets.main.output.classesDir.path
+    _classDirectories << project(':addressbook-common').sourceSets.main.output.classesDirs*.path
 
     additionalSourceDirs = project.files(_sourceDirectories)
     sourceDirectories = project.files(_sourceDirectories)

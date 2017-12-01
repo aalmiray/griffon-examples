@@ -333,6 +333,36 @@ public class ContactsRecord extends UpdatableRecordImpl<ContactsRecord> implemen
         return this;
     }
 
+    @Override
+    public Integer component1() {
+        return value1();
+    }
+
+    @Override
+    public String component2() {
+        return value2();
+    }
+
+    @Override
+    public String component3() {
+        return value3();
+    }
+
+    @Override
+    public String component4() {
+        return value4();
+    }
+
+    @Override
+    public String component5() {
+        return value5();
+    }
+
+    @Override
+    public String component6() {
+        return value6();
+    }
+
     // -------------------------------------------------------------------------
     // Constructors
     // -------------------------------------------------------------------------

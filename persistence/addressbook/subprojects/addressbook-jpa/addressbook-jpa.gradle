@@ -22,9 +22,12 @@ dependencies {
 
     compile project(':addressbook-common')
     runtime "com.h2database:h2:$h2Version"
-    griffon "org.codehaus.griffon.plugins:griffon-jpa-plugin:$jpaPluginVersion"
-    runtime "org.eclipse.persistence:eclipselink:$eclipselinkVersion"
+    // griffon "org.codehaus.griffon.plugins:griffon-jpa-plugin:$jpaPluginVersion"
     testCompile project(':addressbook-test')
+    compile("org.codehaus.griffon.plugins:griffon-jpa-core:$jpaPluginVersion") {
+        exclude group: 'org.eclipse.persistence', module: 'javax.persistence'
+    }
+    compile "org.eclipse.persistence:eclipselink:$eclipselinkVersion"
 }
 
 apply from: rootProject.file('gradle/application.gradle')
