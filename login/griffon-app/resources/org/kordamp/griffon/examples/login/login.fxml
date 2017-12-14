@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2016-2017 Andres Almiray
+
+    This file is part of Griffon Examples
+
+    Griffon Examples is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Griffon Examples is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Griffon Examples. If not, see <http://www.gnu.org/licenses/>.
+
+-->
+
+<?import griffon.javafx.scene.layout.MigLayoutPane?>
+<?import griffon.javafx.support.JavaFXUtils?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<MigLayoutPane prefWidth="400.0"
+               xmlns:fx="http://javafx.com/fxml"
+               layout="fill, insets 30, wrap 2"
+               cols="[left][grow]"
+               fx:controller="org.kordamp.griffon.examples.login.LoginView">
+    <Label JavaFXUtils.i18nKey="org.kordamp.griffon.examples.login.LoginView.username.label"/>
+    <TextField fx:id="username" MigLayoutPane.cc="growx, push"/>
+    <Label JavaFXUtils.i18nKey="org.kordamp.griffon.examples.login.LoginView.password.label"/>
+    <PasswordField fx:id="password" MigLayoutPane.cc="growx, push"/>
+
+    <MigLayoutPane MigLayoutPane.cc="span 2, growx" layout="fill, insets 0">
+        <Button MigLayoutPane.cc="right, push" styleClass="btn, btn-danger" JavaFXUtils.griffonActionId="cancel"/>
+        <Button MigLayoutPane.cc="right, shrink" styleClass="btn, btn-primary" JavaFXUtils.griffonActionId="login"/>
+    </MigLayoutPane>
+</MigLayoutPane>

@@ -1,0 +1,14 @@
+= Login Example
+
+Demonstrates the following features provided by link:http://griffon-framework.org/[Griffon]:
+
+ * Leverage dependency injection.
+ * Instantiate an `MVCGroup` on the fly.
+ * Transform and combine ``StringBinding``s into `BooleanBining` with `MappingBindings`.
+ * Create UI thread safe bindings with `UIThreadAwareBindings`.
+ * Apply I18N to all texts.
+
+Additional libraries used in this project:
+
+ * link:https://github.com/aalmiray/bootstrapfx/[BootstrapFX].
+ * link:https://github.com/aalmiray/ikonli/[Ikonli].
