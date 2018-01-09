@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2017 Andres Almiray
+ * Copyright 2016-2018 Andres Almiray
  *
  * This file is part of Griffon Examples
  *
@@ -20,6 +20,7 @@
 plugins {
     id 'application'
     id 'com.github.hierynomus.license' version '0.11.0'
+    id 'com.github.ben-manes.versions' version '0.17.0'
 }
 
 mainClassName = 'org.kordamp.griffon.examples.cardpane.Sample'
@@ -46,7 +47,7 @@ license {
         java   = 'SLASHSTAR_STYLE'
         fxml   = 'XML_STYLE'
     }
-    ext.year    = '2016-2017'
+    ext.year    = '2016-2018'
     ext.author  = 'Andres Almiray'
     ext.project = 'Griffon Examples'
     exclude '**/*.png'

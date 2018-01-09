@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2017 Andres Almiray
+ * Copyright 2016-2018 Andres Almiray
  *
  * This file is part of Griffon Examples
  *
@@ -28,7 +28,7 @@ license {
         groovy = 'SLASHSTAR_STYLE'
         fxml   = 'XML_STYLE'
     }
-    ext.year    = '2016-2017'
+    ext.year    = '2016-2018'
     ext.author  = 'Andres Almiray'
     ext.project = 'Griffon Examples'
     exclude '**/*.png'
