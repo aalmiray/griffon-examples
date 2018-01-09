@@ -1,0 +1,13 @@
+= Splash Example
+
+Demonstrates the following features provided by link:http://griffon-framework.org/[Griffon]:
+
+ * Leverage dependency injection.
+ * Instantiate an `MVCGroup` on the fly.
+ * Consume standard events.
+ * Produce and consume custom events.
+
+Additional libraries used in this project:
+
+ * link:https://github.com/aalmiray/bootstrapfx/[BootstrapFX].
+ * link:https://github.com/aalmiray/ikonli/[Ikonli].

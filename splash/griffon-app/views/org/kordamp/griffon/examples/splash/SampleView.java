@@ -16,14 +16,12 @@
  * You should have received a copy of the GNU General Public License
  * along with Griffon Examples. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.kordamp.griffon.examples.login;
+package org.kordamp.griffon.examples.splash;
 
 import griffon.core.artifact.GriffonView;
 import griffon.inject.MVCMember;
 import griffon.metadata.ArtifactProviderFor;
 import javafx.fxml.FXML;
-import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -31,8 +29,8 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.codehaus.griffon.runtime.javafx.artifact.AbstractJavaFXGriffonView;
 
-import java.util.Collections;
 import javax.annotation.Nonnull;
+import java.util.Collections;
 
 @ArtifactProviderFor(GriffonView.class)
 public class SampleView extends AbstractJavaFXGriffonView {
@@ -42,13 +40,10 @@ public class SampleView extends AbstractJavaFXGriffonView {
     @MVCMember @Nonnull
     private SampleModel model;
 
-    @FXML
-    private Label content;
-
     @Override
     public void initUI() {
         Stage stage = (Stage) getApplication()
-            .createApplicationContainer(Collections.<String,Object>emptyMap());
+            .createApplicationContainer(Collections.<String, Object>emptyMap());
         stage.setTitle(getApplication().getConfiguration().getAsString("application.title"));
         stage.setScene(init());
         stage.sizeToScene();
@@ -59,7 +54,6 @@ public class SampleView extends AbstractJavaFXGriffonView {
     // build the UI
     private Scene init() {
         Parent node = (Parent) loadFromFXML();
-        content.textProperty().bind(model.contentProperty());
 
         connectActions(node, controller);
         connectMessageSource(node);

@@ -1,0 +1,74 @@
+/*
+ * Copyright 2016-2018 Andres Almiray
+ *
+ * This file is part of Griffon Examples
+ *
+ * Griffon Examples is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Griffon Examples is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Griffon Examples. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+javadoc {
+    excludes = ['**/*.html', 'META-INF/**', '**/*.groovy']
+
+    options.use         = true
+    options.splitIndex  = true
+    options.encoding    = 'UTF-8'
+    options.author      = true
+    options.version     = true
+    options.windowTitle = "$project.name $project.version API"
+    options.docTitle    = "$project.name $project.version API"
+    options.links       = ['http://www.slf4j.org/apidocs/',
+                           'http://junit.org/junit4/javadoc/latest/',
+                           'http://docs.oracle.com/javase/7/docs/api/',
+                           'http://aalmiray.github.io/jsr-305/apidocs/',
+                           'http://javax-inject.github.io/javax-inject/api/',
+                           'http://griffon-framework.org/guide/latest/api/']
+
+    doLast { task ->
+        copy {
+            into task.destinationDir
+            from rootProject.file('src/javadoc/resources/img/griffon.ico'),
+                rootProject.file('src/javadoc/resources/css/stylesheet.css')
+        }
+        copy {
+            into file("${task.destinationDir}/resources")
+            from rootProject.file('src/javadoc/resources/img/')
+        }
+    }
+}
+
+project.plugins.withId('groovy') {
+    groovydoc {
+        use = true
+        source = project.sourceSets.main.allSource
+        classpath = javadoc.classpath
+        windowTitle = "$project.name $project.version API"
+        docTitle = "$project.name $project.version API"
+        header = "$project.name $project.version API"
+        includePrivate = false
+        link 'http://www.slf4j.org/apidocs/', 'org.slf4j.'
+        link 'http://junit.org/junit4/javadoc/latest/', 'org.junit.', 'junit.'
+        link 'http://docs.oracle.com/javase/7/docs/api/', 'java.', 'org.xml.', 'javax.', 'org.w3c.'
+        link 'http://aalmiray.github.io/jsr-305/apidocs/', 'javax.annotation.'
+        link 'http://javax-inject.github.io/javax-inject/api/', 'javax.inject.'
+        link 'http://griffon-framework.org/guide/latest/api/', 'griffon.', 'org.codehaus.griffon.'
+
+        doLast { task ->
+            copy {
+                into task.destinationDir
+                from rootProject.file('src/javadoc/resources/img/griffon.ico')
+                rename 'griffon.ico', 'groovy.ico'
+            }
+        }
+    }
+}
